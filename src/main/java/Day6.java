@@ -3,7 +3,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -19,9 +23,10 @@ public class Day6 {
                 .map(StringUtils::stripToEmpty)
                 .collect(Collectors.toList());
 
-        System.out.println("Running 1...");
         problem1(input);
+        problem1_streams(input);
         problem2(input);
+        problem2_streams(input);
     }
 
     public static void problem1(List<String> input) {
@@ -33,8 +38,6 @@ public class Day6 {
                 totals.put(pos++, ch);
             }
         }
-
-        System.out.println(totals);
 
         String message = "";
         for (int pos : totals.keySet()) {
@@ -57,6 +60,24 @@ public class Day6 {
         System.out.println(message);
     }
 
+    public static void problem1_streams(List<String> input) {
+
+        IntStream.range(0, 8).forEach(index -> {
+            Map<Character, Long> totals = input.stream()
+                    .map(s -> s.charAt(index))
+                    .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+
+            char ch = totals.entrySet().stream()
+                    .max((e1, e2) -> Long.compare(e1.getValue(), e2.getValue()))
+                    .map(Entry::getKey)
+                    .get();
+
+            System.out.print(ch);
+        });
+
+        System.out.println();
+    }
+
     public static void problem2(List<String> input) {
         ListMultimap<Integer, Character> totals = ArrayListMultimap.create();
 
@@ -66,8 +87,6 @@ public class Day6 {
                 totals.put(pos++, ch);
             }
         }
-
-        System.out.println(totals);
 
         String message = "";
         for (int pos : totals.keySet()) {
@@ -91,5 +110,21 @@ public class Day6 {
         }
 
         System.out.println(message);
+    }
+
+    public static void problem2_streams(List<String> input) {
+        IntStream.range(0, 8).forEach(index -> {
+            Map<Character, Long> totals = input.stream()
+                    .map(s -> s.charAt(index))
+                    .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+
+            char ch = totals.entrySet().stream()
+                    .min((e1, e2) -> Long.compare(e1.getValue(), e2.getValue()))
+                    .map(Entry::getKey)
+                    .get();
+
+            System.out.print(ch);
+        });
+        System.out.println();
     }
 }
