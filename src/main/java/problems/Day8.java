@@ -1,3 +1,5 @@
+package problems;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,14 +12,14 @@ import org.apache.commons.lang3.StringUtils;
 public class Day8 {
 
     public static void main(String[] args) throws IOException {
-        Path path = Paths.get("src/main/java/input8.txt");
+        Path path = Paths.get("src/main/input/input8.txt");
         List<String> input = Files.readAllLines(path).stream()
                 .map(StringUtils::stripToEmpty)
                 .collect(Collectors.toList());
 
         problem1(input);
 
-        path = Paths.get("src/main/java/input8-reddit.txt");
+        path = Paths.get("src/main/input/input8-reddit.txt");
         input = Files.readAllLines(path).stream()
                 .map(StringUtils::stripToEmpty)
                 .collect(Collectors.toList());

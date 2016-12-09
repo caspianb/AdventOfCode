@@ -1,3 +1,5 @@
+package problems;
+
 import java.security.NoSuchAlgorithmException;
 import java.util.Set;
 

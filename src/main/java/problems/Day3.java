@@ -1,3 +1,5 @@
+package problems;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -14,7 +16,7 @@ public class Day3 {
     }
 
     public static void problem1() throws IOException {
-        List<String> input = Files.readAllLines(Paths.get("src/main/java/input3.txt"));
+        List<String> input = Files.readAllLines(Paths.get("src/main/input/input3.txt"));
         int possible = 0;
         for (String line : input) {
             String[] numbers = line.trim().split("\\h+");
@@ -33,7 +35,7 @@ public class Day3 {
     }
 
     public static void problem2() throws IOException {
-        List<String> input = Files.readAllLines(Paths.get("src/main/java/input3.txt"));
+        List<String> input = Files.readAllLines(Paths.get("src/main/input/input3.txt"));
         int possible = 0;
 
         List<Integer> col1 = Lists.newArrayList();

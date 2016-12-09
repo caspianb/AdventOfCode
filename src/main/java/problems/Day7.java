@@ -1,3 +1,5 @@
+package problems;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,7 +16,7 @@ import com.google.common.collect.Sets;
 public class Day7 {
 
     public static void main(String[] args) throws IOException {
-        Path path = Paths.get("src/main/java/input7.txt");
+        Path path = Paths.get("src/main/input/input7.txt");
         List<String> input = Files.readAllLines(path).stream()
                 .map(StringUtils::stripToEmpty)
                 .collect(Collectors.toList());
