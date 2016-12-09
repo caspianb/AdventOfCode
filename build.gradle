@@ -6,9 +6,12 @@ buildscript {
     }
 }
 
+apply plugin:'application'
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
+
+mainClassName = "Day6"
 
 repositories {
     jcenter()
