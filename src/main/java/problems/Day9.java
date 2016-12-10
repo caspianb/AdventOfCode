@@ -66,7 +66,12 @@ public class Day9 {
                 length++;
             }
             else {
-                int closeParen = text.indexOf(')', i + 1);
+                int closeParen = text.indexOf(')', i);
+                if (closeParen < 0) {
+                    length += text.length() - i;
+                    break;
+                }
+
                 String read = text.substring(i + 1, closeParen);
 
                 String[] vals = read.split("x");
@@ -74,7 +79,11 @@ public class Day9 {
                 int times = Integer.valueOf(vals[1]);
 
                 i = closeParen + 1;
-                String repeat = text.substring(i, i + nextChars);
+
+                String repeat = "";
+                if (i + nextChars <= text.length()) {
+                    repeat = text.substring(i, i + nextChars);
+                }
 
                 long val = decompress(repeat);
                 length += val * times;
