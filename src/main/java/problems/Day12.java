@@ -36,9 +36,6 @@ public class Day12 {
         int instr = 0;
         while (instr < input.size()) {
             String line = input.get(instr);
-            //System.out.println(regs);
-            //System.out.println(instr);
-            //System.out.println(line);
 
             String[] str = line.split(" ");
             String cmd = str[0];
