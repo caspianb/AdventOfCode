@@ -21,17 +21,19 @@ public class Day12 {
                 .map(StringUtils::stripToEmpty)
                 .collect(Collectors.toList());
 
-        problem1(input);
-        problem2(input);
-    }
-
-    public static void problem1(List<String> input) {
-
         Map<String, Integer> regs = Maps.newHashMap();
+
         regs.put("a", 0);
         regs.put("b", 0);
-        regs.put("c", 1);
+        regs.put("c", 0);
         regs.put("d", 0);
+        problem(input, regs);
+
+        regs.put("c", 1);
+        problem(input, regs);
+    }
+
+    public static void problem(List<String> input, Map<String, Integer> regs) {
 
         int instr = 0;
         while (instr < input.size()) {
