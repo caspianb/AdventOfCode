@@ -310,11 +310,11 @@ public class Day11 {
             for (Floor floor : clone.floors) {
                 for (String gen : Lists.newArrayList(floor.getGens())) {
                     floor.gens.remove(gen);
-                    floor.gens.add(m.get(gen));
+                    floor.gens.add(m.get(gen) + "G");
                 }
                 for (String chip : Lists.newArrayList(floor.getChips())) {
                     floor.chips.remove(chip);
-                    floor.chips.add(m.get(chip));
+                    floor.chips.add(m.get(chip) + "C");
                 }
             }
 
