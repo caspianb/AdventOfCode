@@ -290,7 +290,12 @@ public class Day11 {
                     Objects.equals(state.floors, this.floors);
         }
 
-        public State cloneGenericState() {
+        /**
+         * Creates a "generic" version of the current state such that
+         * any states which are functionally identical will generate the
+         * same generic state.
+         */
+        public State createGenericState() {
             State clone = cloneState(null, currentFloor);
             Map<String, String> m = Maps.newLinkedHashMap();
             char n = 'A';
@@ -371,7 +376,7 @@ public class Day11 {
 
         Set<State> remove = Sets.newLinkedHashSet();
         for (State state : states) {
-            State generic = state.cloneGenericState();
+            State generic = state.createGenericState();
 
             if (!processedStates.add(generic)) {
                 remove.add(state);
