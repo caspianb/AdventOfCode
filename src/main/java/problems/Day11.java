@@ -145,7 +145,7 @@ public class Day11 {
     }
 
     private static class State {
-        private Set<State> prevStates = Sets.newLinkedHashSet();
+        private State parentState = null;
         private int currentFloor = 0;
         private List<Floor> floors;
         private String actions = "";
@@ -155,11 +155,7 @@ public class Day11 {
         }
 
         private State(State parentState, int currentFloor, List<Floor> floors) {
-            if (parentState != null) {
-                prevStates = Sets.newLinkedHashSet();
-                prevStates.add(parentState);
-                prevStates.addAll(parentState.prevStates);
-            }
+            this.parentState = parentState;
             this.currentFloor = currentFloor;
             this.floors = floors;
         }
@@ -237,7 +233,13 @@ public class Day11 {
         }
 
         public int step() {
-            return prevStates.size();
+            int steps = 0;
+            State state = this.parentState;
+            while (state != null) {
+                steps++;
+                state = state.parentState;
+            }
+            return steps;
         }
 
         public Floor getFloor(int i) {
@@ -424,7 +426,11 @@ public class Day11 {
     }
 
     protected static void printAnswer(State state) {
-        List<State> prevStates = Lists.newArrayList(state.prevStates);
+        List<State> prevStates = Lists.newArrayList();
+        while (state != null) {
+            prevStates.add(state);
+            state = state.parentState;
+        }
         Collections.reverse(prevStates);
 
         prevStates.forEach(s -> {
