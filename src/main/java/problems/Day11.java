@@ -14,6 +14,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -127,20 +129,6 @@ public class Day11 {
             }
 
             return str.toString();
-
-            //            return String.format("F%s: %5s %-5s %5s %-5s %5s %-5s %5s %-5s %5s %5s -- isValid=%s",
-            //                    floorNumber + 1,
-            //                    gens.contains("promethium") ? "PRG" : ".",
-            //                    chips.contains("promethium") ? "PRC" : ".",
-            //                    gens.contains("cobalt") ? "COG" : ".",
-            //                    chips.contains("cobalt") ? "COC" : ".",
-            //                    gens.contains("curium") ? "CUG" : ".",
-            //                    chips.contains("curium") ? "CUC" : ".",
-            //                    gens.contains("ruthenium") ? "RUG" : ".",
-            //                    chips.contains("ruthenium") ? "RUC" : ".",
-            //                    gens.contains("plutonium") ? "PLG" : ".",
-            //                    chips.contains("plutonium") ? "PLC" : ".",
-            //                    isValid());
         }
     }
 
@@ -293,32 +281,27 @@ public class Day11 {
         }
 
         /**
-         * Creates a "generic" version of the current state such that
-         * any states which are functionally identical will generate the
-         * same generic state.
+         * Returns a "generic" object representation of the current state such that
+         * any states which are functionally equivalent will generate the
+         * same generic object, even if the positions of *specific* generator-chip types
+         * are swapped.
          */
-        public State createGenericState() {
-            State clone = cloneState(null, currentFloor);
-            Map<String, String> m = Maps.newLinkedHashMap();
-            char n = 'A';
+        public Object createGenericState() {
+            Map<String, Pair<Integer, Integer>> pairsMap = Maps.newHashMap();
+
             for (Floor floor : floors) {
                 for (String gen : floor.getGens()) {
-                    m.put(gen, String.valueOf(n++));
+                    Pair<Integer, Integer> pair = pairsMap.computeIfAbsent(gen, g -> MutablePair.of(null, null));
+                    ((MutablePair<Integer, Integer>) pair).setLeft(floor.floorNumber);
+                }
+                for (String chip : floor.getChips()) {
+                    Pair<Integer, Integer> pair = pairsMap.computeIfAbsent(chip, c -> MutablePair.of(null, null));
+                    ((MutablePair<Integer, Integer>) pair).setRight(floor.floorNumber);
                 }
             }
 
-            for (Floor floor : clone.floors) {
-                for (String gen : Lists.newArrayList(floor.getGens())) {
-                    floor.gens.remove(gen);
-                    floor.gens.add(m.get(gen) + "G");
-                }
-                for (String chip : Lists.newArrayList(floor.getChips())) {
-                    floor.chips.remove(chip);
-                    floor.chips.add(m.get(chip) + "C");
-                }
-            }
-
-            return clone;
+            List<Pair<Integer, Integer>> pairsList = pairsMap.values().stream().sorted().collect(Collectors.toList());
+            return Pair.of(this.currentFloor, pairsList);
         }
 
         @Override
@@ -368,7 +351,7 @@ public class Day11 {
         return floors;
     }
 
-    protected static Set<State> pruneEquivalent(Set<State> states, Set<State> processedStates) {
+    protected static Set<State> pruneEquivalent(Set<State> states, Set<Object> processedStates) {
         states.removeAll(processedStates);
 
         // Now we want to do some trickery... If we find effectively equivalent states in our history
@@ -378,7 +361,7 @@ public class Day11 {
 
         Set<State> remove = Sets.newLinkedHashSet();
         for (State state : states) {
-            State generic = state.createGenericState();
+            Object generic = state.createGenericState();
 
             if (!processedStates.add(generic)) {
                 remove.add(state);
@@ -397,10 +380,7 @@ public class Day11 {
         Set<State> states = Sets.newLinkedHashSet();
         states.add(init);
 
-        Set<State> processedStates = Sets.newHashSet();
-
-        System.out.println(init);
-        System.out.println();
+        Set<Object> processedStates = Sets.newHashSet();
 
         outer:
         while (!states.isEmpty()) {
@@ -418,7 +398,7 @@ public class Day11 {
             });
 
             states = pruneEquivalent(newStates, processedStates);
-            System.out.println("Current step: " + states.iterator().next().step() + " [" + states.size() + "]");
+            //System.out.println("Current step: " + states.iterator().next().step() + " [" + states.size() + "]");
         }
 
         long totalTime = System.nanoTime() - startTime;
@@ -441,8 +421,6 @@ public class Day11 {
             catch (Exception e) {
             }
         });
-
-        System.out.println(state);
     }
 
 }
