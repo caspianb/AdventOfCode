@@ -38,8 +38,3 @@ jar {
     }
 }
 
-task runDay(type: JavaExec) {
-  classpath = sourceSets.main.runtimeClasspath
-  main = "$mainClassName"
-  args = ["$day"]
-}

@@ -80,7 +80,7 @@ public class BFS {
         Objects.requireNonNull(accept);
         Objects.requireNonNull(nextMoves);
 
-        Set<T> history = Sets.newLinkedHashSet();
+        Set<T> processedStates = Sets.newLinkedHashSet();
         Set<T> currentStates = Sets.newLinkedHashSet();
         currentStates.add(init);
 
@@ -92,9 +92,9 @@ public class BFS {
                     answers.add(state);
                 }
 
-                history.add(state);
+                processedStates.add(state);
                 newStates.addAll((Collection<T>) nextMoves.apply(state));
-                newStates.removeAll(history);
+                newStates.removeAll(processedStates);
             }
 
             currentStates = newStates;
