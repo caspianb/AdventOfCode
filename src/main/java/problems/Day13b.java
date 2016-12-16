@@ -73,17 +73,16 @@ public class Day13b {
     }
 
     public static void problem1() {
-        Position answer = BFS.solve(new Position(1, 1),
-                Position::moves,
-                p -> p.xPos == 31 && p.yPos == 39);
-
+        State answer = BFS.solve(new Position(1, 1),
+                p -> p.xPos == 31 && p.yPos == 39,
+                Position::moves);
         System.out.println(answer.steps());
     }
 
     public static void problem2() {
         Set<Position> answers = BFS.accumulate(new Position(1, 1),
-                Position::moves,
-                p -> p.steps() <= 50);
+                p -> p.steps() <= 50,
+                Position::moves);
 
         System.out.println(answers.size());
     }
