@@ -10,6 +10,8 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
@@ -122,7 +124,7 @@ public class Day11b {
                 }
 
                 if (chips.contains(pair.getKey())) {
-                    str.append(String.format("%-5s", pair.getValue() + "M"));
+                    str.append(String.format("%-5s", pair.getValue() + "C"));
                 }
                 else {
                     str.append(String.format("%-5s", "."));
@@ -133,18 +135,16 @@ public class Day11b {
         }
     }
 
-    private static class State {
-        private State parentState = null;
+    private static class State extends utils.bfs.State {
         private int currentFloor = 0;
         private List<Floor> floors;
-        private String actions = "";
 
         public State(List<Floor> floors) {
             this(null, 0, floors);
         }
 
-        private State(State parentState, int currentFloor, List<Floor> floors) {
-            this.parentState = parentState;
+        private State(State parent, int currentFloor, List<Floor> floors) {
+            super(parent);
             this.currentFloor = currentFloor;
             this.floors = floors;
         }
@@ -208,27 +208,13 @@ public class Day11b {
         private void moveGen(String gen, int from, int to) {
             if (getFloor(from).gens.remove(gen)) {
                 getFloor(to).gens.add(gen);
-                if (actions.length() > 0) actions += "; ";
-                actions += String.format("move gen=%s from [%s] to [%s]", gen, from + 1, to + 1);
             }
         }
 
         private void moveChip(String chip, int from, int to) {
             if (getFloor(from).chips.remove(chip)) {
                 getFloor(to).chips.add(chip);
-                if (actions.length() > 0) actions += "; ";
-                actions += String.format("move chip=%s from [%s] to [%s]", chip, from + 1, to + 1);
             }
-        }
-
-        public int step() {
-            int steps = 0;
-            State state = this.parentState;
-            while (state != null) {
-                steps++;
-                state = state.parentState;
-            }
-            return steps;
         }
 
         public Floor getFloor(int i) {
@@ -312,10 +298,9 @@ public class Day11b {
                     .map(f -> String.format("   %s %s", f == getFloor(currentFloor) ? "E" : "-", f.toString()))
                     .collect(Collectors.joining(System.lineSeparator()));
 
-            return String.format("State [step=%s, currentFloor=%s, actions=%s, hash=%s%n%s]",
-                    step(),
+            return String.format("State [step=%s, currentFloor=%s, hash=%s%n%s]",
+                    steps(),
                     currentFloor + 1,
-                    actions,
                     hashCode(),
                     floorsStr);
         }
@@ -325,26 +310,23 @@ public class Day11b {
     public static List<Floor> readFloors(List<String> input) {
         List<Floor> floors = Lists.newArrayList();
 
-        int floorNum = 0;
-        for (String line : input) {
-            System.out.println(line);
-            String[] words = line.split(" ");
+        Pattern pattern = Pattern.compile("([a-z]+)( generator|-compatible)");
 
-            Floor floor = new Floor(floorNum++);
+        for (String line : input) {
+            Floor floor = new Floor(floors.size());
             floors.add(floor);
 
-            for (int i = 0; i < words.length; i++) {
-                if (words[i].equals("a")) {
-                    String word = words[i + 1];
-                    if (word.contains("compatible")) {
-                        word = word.split("-")[0];
-                        floor.chips.add(word);
-                    }
-                    else {
-                        floor.gens.add(word);
-                    }
+            Matcher matcher = pattern.matcher(line);
+            while (matcher.find()) {
+                String g1 = matcher.group(1);
+                String g2 = matcher.group(2);
 
-                    ABBR.put(word, word.substring(0, 1).toUpperCase() + word.substring(1, 2).toLowerCase());
+                if (g2.contains("generator")) {
+                    floor.gens.add(g1);
+                    ABBR.put(g1, g1.substring(0, 1).toUpperCase() + g1.substring(1, 2).toLowerCase());
+                }
+                else {
+                    floor.chips.add(g1);
                 }
             }
         }
@@ -380,28 +362,14 @@ public class Day11b {
                 State::isDone,
                 s -> s.nextStates(),
                 Day11b::pruneEquivalent);
-        System.out.println(answer.step());
+        printAnswer(answer);
 
         long totalTime = System.nanoTime() - startTime;
         System.out.format("Total time: %.5ss%n", TimeUnit.NANOSECONDS.toMillis(totalTime) / 1000d);
     }
 
     protected static void printAnswer(State state) {
-        List<State> prevStates = Lists.newArrayList();
-        while (state != null) {
-            prevStates.add(state);
-            state = state.parentState;
-        }
-        Collections.reverse(prevStates);
-
-        prevStates.forEach(s -> {
-            try {
-                System.out.println(" - " + s + System.lineSeparator());
-                //Thread.sleep(1000);
-            }
-            catch (Exception e) {
-            }
-        });
+        state.stepsList().forEach(s -> System.out.println(" - " + s + System.lineSeparator()));
     }
 
 }

@@ -2,9 +2,13 @@ package utils.bfs;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+
+import com.google.common.collect.Lists;
 
 public abstract class State implements Cloneable {
 
@@ -27,6 +31,20 @@ public abstract class State implements Cloneable {
             state = state.parent;
         }
         return steps;
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends State> List<T> stepsList() {
+        List<State> steps = Lists.newArrayList();
+
+        State state = this;
+        while (state != null) {
+            steps.add(state);
+            state = state.parent;
+        }
+        Collections.reverse(steps);
+
+        return (List<T>) steps;
     }
 
     @Override
