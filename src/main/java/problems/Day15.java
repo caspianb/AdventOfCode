@@ -39,7 +39,7 @@ public class Day15 {
             this.total = total;
         }
 
-        public boolean open(long time) {
+        public boolean closed(long time) {
             return (current + (time + number)) % total != 0;
         }
     }
@@ -63,7 +63,7 @@ public class Day15 {
 
             boolean answer = true;
             for (Disk d : disks) {
-                if (d.open(time)) {
+                if (d.closed(time)) {
                     answer = false;
                     break;
                 }
