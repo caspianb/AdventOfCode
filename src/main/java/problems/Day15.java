@@ -34,10 +34,13 @@ public class Day15 {
         int total;
 
         public Disk(int number, int current, int total) {
-            super();
             this.number = number;
             this.current = current;
             this.total = total;
+        }
+
+        public boolean open(long time) {
+            return (current + (time + number)) % total != 0;
         }
     }
 
@@ -60,7 +63,7 @@ public class Day15 {
 
             boolean answer = true;
             for (Disk d : disks) {
-                if ((d.current + (time + d.number)) % d.total != 0) {
+                if (d.open(time)) {
                     answer = false;
                     break;
                 }
