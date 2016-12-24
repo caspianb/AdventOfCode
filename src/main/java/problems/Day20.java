@@ -3,7 +3,6 @@ package problems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,14 +60,12 @@ public class Day20 {
             windows.add(window);
         }
 
-        Collections.sort(windows);
         DateWindowSpan span = new DateWindowSpan(windows);
 
         long prevEnd = -1;
         long allowed = 0;
         for (DateWindow window : span.getWindows()) {
             long start = window.getStartTime();
-            if (start < prevEnd) continue;
 
             allowed += start - (prevEnd + 1);
             prevEnd = window.getEndTime();
