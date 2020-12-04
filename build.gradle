@@ -1,41 +1,28 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-    }
+plugins {
+    id 'java'
+    id 'application'
 }
 
-apply plugin:'application'
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-
-mainClassName = "Application"
+sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
     jcenter()
 }
 
 dependencies {
-    compile group: 'com.google.guava', name: 'guava', version: '20.0'
-    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.5'
-    compile group: 'org.apache.commons', name: 'commons-math3', version: '3.6.1'  
-    compile group: 'org.apache.commons', name: 'commons-csv', version: '1.1'
-    compile group: 'commons-codec', name: 'commons-codec', version: '1.9'
-    compile group: 'commons-collections', name: 'commons-collections', version: '3.0'
-    compile group: 'commons-io', name: 'commons-io', version: '2.5'
+    implementation 'com.google.guava:guava:+'
+    implementation 'org.apache.commons:commons-lang3:+'
+    implementation 'org.apache.commons:commons-math3:+'
+    implementation 'commons-collections:commons-collections:+'
+    implementation 'org.apache.commons:commons-csv:+'
+    implementation 'commons-codec:commons-codec:+'
+    implementation 'commons-io:commons-io:+'
 
-    testCompile group: 'junit', name: 'junit'
-    testCompile group: 'org.mockito', name: 'mockito-core'
+    testImplementation 'org.mockito:mockito-all:+'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:+'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:+'
 }
 
-jar {
-    manifest { 
-        attributes 'Main-Class': "$mainClassName"
-    }  
-    from {
-        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-    }
+test {
+    useJUnitPlatform()
 }
-
