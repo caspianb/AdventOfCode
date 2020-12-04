@@ -10,8 +10,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.collect.Lists;
 
-import utils.DateWindow;
-import utils.DateWindowSpan;
+import util.misc.DateWindow;
+import util.misc.DateWindowSpan;
 
 public class Day20 {
 

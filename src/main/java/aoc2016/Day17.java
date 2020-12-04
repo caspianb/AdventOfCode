@@ -7,8 +7,8 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 import com.google.common.collect.Sets;
 
-import utils.bfs.BFS;
-import utils.bfs.State;
+import util.bfs.BFS;
+import util.bfs.State;
 
 public class Day17 {
 

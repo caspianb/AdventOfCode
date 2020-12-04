@@ -6,8 +6,8 @@ import java.util.Set;
 
 import com.google.common.collect.Sets;
 
-import utils.bfs.BFS;
-import utils.bfs.State;
+import util.bfs.BFS;
+import util.bfs.State;
 
 public class Day13b {
 

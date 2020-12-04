@@ -22,7 +22,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
-import utils.bfs.BFS;
+import util.bfs.BFS;
 
 public class Day11b {
 
@@ -135,7 +135,7 @@ public class Day11b {
         }
     }
 
-    private static class State extends utils.bfs.State {
+    private static class State extends util.bfs.State {
         private int currentFloor = 0;
         private List<Floor> floors;
 
