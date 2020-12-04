@@ -3,17 +3,13 @@ package aoc2020;
 import util.ResourceReader;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class Day4 {
     public static void main(String[] args) {
-        var input = ResourceReader.readFile("aoc2020/day4.txt")
-                .replaceAll("\r", "")
-                .split("\n\n");
+        var input = ResourceReader.readBatchedLines("aoc2020/day4.txt", true);
 
         int c1 = 0, c2 = 0;
         for (String passportData : input) {
-            passportData = passportData.replaceAll("\n", " ");
             boolean hasRequired = hasRequired(passportData);
             c1 += hasRequired ? 1 : 0;
             c2 += hasRequired && isValid(passportData) ? 1 : 0;
@@ -30,7 +26,7 @@ public class Day4 {
     }
 
     static boolean isValid(String passport) {
-        List<String> validPatterns = Arrays.asList(
+        var validPatterns = Arrays.asList(
                 "byr:(19[2-9][0-9]|200[0-2])",
                 "iyr:(201[0-9]|2020)",
                 "eyr:(202[0-9]|2030)",
