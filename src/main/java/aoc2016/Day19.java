@@ -5,13 +5,25 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+// See Josephus Problem
 public class Day19 {
 
-    private static final int input = 3001330;
+    private static final int input = 3005290;
 
     public static void main(String[] args) throws IOException {
-        problem1();
-        problem2();
+        System.out.println(problem1(input));
+        //problem2();
+
+        // Pattern for part 1 (Josephus Problem)
+        // Every pow2 -- starts at 1 then increases by 2
+
+        // Part 1 answer ... (input - highest pow2 < input)*2 + 1
+        int pow2 = 2097152;
+        System.out.println((input - pow2) * 2 + 1);
+
+        // Pattern indicates answer for part2 == input - (highest power of 3 < input)
+        int pow3 = 1594323;
+        System.out.println(input - pow3);
     }
 
     public static class Elf {
@@ -60,13 +72,14 @@ public class Day19 {
         return elves;
     }
 
-    public static void problem1() {
+    public static int problem1(int input) {
         List<Elf> elves = getElves(input);
         while (!done(elves)) {
             elves = swapNext(elves);
         }
 
-        System.out.println(elves.get(0));
+        //System.out.println(elves.get(0));
+        return elves.get(0).number;
     }
 
     public static List<Elf> swapMid(List<Elf> elves) {
@@ -89,15 +102,17 @@ public class Day19 {
         return elves;
     }
 
-    public static void problem2() {
+    // EXTREMELY SLOW SOLUTION
+    public static int problem2VerySlow(int input) {
         List<Elf> elves = getElves(input);
 
         while (!done(elves)) {
-            System.out.println(" ..." + elves.size());
+            //System.out.println(" ..." + elves.size());
             elves = swapMid(elves);
         }
 
-        System.out.println(elves.get(0));
+        //System.out.println(elves.get(0));
+        return elves.get(0).number;
     }
 
 }

@@ -10,7 +10,7 @@ import com.google.common.collect.Sets;
 public class Day5 {
 
     public static void main(String[] args) throws Exception {
-        String input = "cxdnnyjw";
+        String input = "ojvtpuvg";
 
         problem1(input);
         problem2(input);

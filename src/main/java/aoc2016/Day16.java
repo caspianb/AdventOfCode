@@ -1,24 +1,14 @@
 package aoc2016;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 
 public class Day16 {
 
-    private static final String input = "00101000101111010";
+    private static final String input = "10001110011110000";
 
     public static void main(String[] args) throws IOException {
-        Path path = Paths.get("src/main/resources/aoc2016/input16.txt");
-        List<String> input = Files.readAllLines(path).stream()
-                .map(StringUtils::stripToEmpty)
-                .collect(Collectors.toList());
-
         System.out.println("Running Day16...");
         problem(272);
         problem(35651584);

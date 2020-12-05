@@ -1,29 +1,17 @@
 package aoc2016;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.stream.Collectors;
+import util.ResourceReader;
 
-import org.apache.commons.lang3.StringUtils;
+import java.io.IOException;
+import java.util.List;
 
 public class Day8 {
 
     public static void main(String[] args) throws IOException {
-        Path path = Paths.get("src/main/resources/aoc2016/input8.txt");
-        List<String> input = Files.readAllLines(path).stream()
-                .map(StringUtils::stripToEmpty)
-                .collect(Collectors.toList());
-
+        List<String> input = ResourceReader.readLines("aoc2016/input8.txt");
         problem1(input);
 
-        path = Paths.get("src/main/resources/aoc2016/input8-reddit.txt");
-        input = Files.readAllLines(path).stream()
-                .map(StringUtils::stripToEmpty)
-                .collect(Collectors.toList());
-
+        input = ResourceReader.readLines("aoc2016/input8-reddit.txt");
         problemReddit(input);
     }
 

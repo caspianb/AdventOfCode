@@ -10,7 +10,7 @@ import com.google.common.collect.Sets;
 public class Day13 {
 
     public static void main(String[] args) throws IOException {
-        int input = 1362;
+        int input = 1358;
 
         problem1(input);
         problem2(input);

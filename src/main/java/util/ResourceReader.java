@@ -32,7 +32,9 @@ public class ResourceReader {
      * Reads all lines in a file.
      */
     public static List<String> readLines(String filename) {
-        return readFile(filename).lines().collect(Collectors.toList());
+        return readFile(filename).lines()
+                .map(StringUtils::trimToEmpty)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -60,7 +62,10 @@ public class ResourceReader {
      * Read in all strings in a file as comma separated values.
      */
     public static List<String> readCsv(String filename) {
-        return Arrays.asList(readFile(filename).split(","));
+        return Arrays.asList(readFile(filename).split(","))
+                .stream()
+                .map(String::trim)
+                .collect(Collectors.toList());
     }
 
     /**

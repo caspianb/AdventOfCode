@@ -1,16 +1,15 @@
 package aoc2016;
 
+import util.ResourceReader;
+
 import java.util.Set;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.collect.Sets;
 
 public class Day1 {
-
-    private static final String PROBLEM_INPUT = "R3, L5, R2, L1, L2, R5, L2, R2, L2, L2, L1, R2, L2, R4, R4, R1, L2, L3, R3, L1, R2, L2, L4, R4, R5, L3, R3, L3, L3, R4, R5, L3, R3, L5, L1, L2, R2, L1, R3, R1, L1, R187, L1, R2, R47, L5, L1, L2, R4, R3, L3, R3, R4, R1, R3, L1, L4, L1, R2, L1, R4, R5, L1, R77, L5, L4, R3, L2, R4, R5, R5, L2, L2, R2, R5, L2, R194, R5, L2, R4, L5, L4, L2, R5, L3, L2, L5, R5, R2, L3, R3, R1, L4, R2, L1, R5, L1, R5, L1, L1, R3, L1, R5, R2, R5, R5, L4, L5, L5, L5, R3, L2, L5, L4, R3, R1, R1, R4, L2, L4, R5, R5, R4, L2, L2, R5, R5, L5, L2, R4, R4, L4, R1, L3, R1, L1, L1, L1, L4, R5, R4, L4, L4, R5, R3, L2, L2, R3, R1, R4, L3, R1, L4, R3, L3, L2, R2, R2, R2, L1, L4, R3, R2, R2, L3, R2, L3, L2, R4, L2, R3, L4, R5, R4, R1, R5, R3";
 
     public enum Direction {
         NORTH(0, 1),
@@ -46,7 +45,7 @@ public class Day1 {
     }
 
     public static void main(String[] args) {
-        String[] instructions = StringUtils.split(PROBLEM_INPUT, ", ");
+        String[] instructions = ResourceReader.readCsv("aoc2016/input1.txt").toArray(String[]::new);
         Direction currentDirection = Direction.NORTH;
         Set<Object> alreadyVisited = Sets.newHashSet();
         int xPosition = 0;

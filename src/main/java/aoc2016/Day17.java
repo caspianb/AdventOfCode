@@ -12,7 +12,7 @@ import util.bfs.State;
 
 public class Day17 {
 
-    private static final String input = "vkjiggvb";
+    private static final String input = "pxxbnzuo";
 
     public static String hash(String input) {
         return DigestUtils.md5Hex(input);

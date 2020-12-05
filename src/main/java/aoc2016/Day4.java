@@ -1,14 +1,10 @@
 package aoc2016;
 
+import util.ResourceReader;
+
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-
-import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -16,10 +12,7 @@ import com.google.common.collect.Maps;
 public class Day4 {
 
     public static void main(String[] args) throws IOException {
-        Path path = Paths.get("src/main/resources/aoc2016/input4.txt");
-        List<String> input = Files.readAllLines(path).stream()
-                .map(StringUtils::stripToEmpty)
-                .collect(Collectors.toList());
+        List<String> input = ResourceReader.readLines("aoc2016/input4.txt");
 
         problem1(input);
         problem2(input);

@@ -1,5 +1,7 @@
 package aoc2016;
 
+import util.ResourceReader;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -16,7 +18,7 @@ public class Day3 {
     }
 
     public static void problem1() throws IOException {
-        List<String> input = Files.readAllLines(Paths.get("src/main/resources/aoc2016/input3.txt"));
+        List<String> input = ResourceReader.readLines("aoc2016/input3.txt");
         int possible = 0;
         for (String line : input) {
             String[] numbers = line.trim().split("\\h+");

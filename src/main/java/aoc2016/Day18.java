@@ -7,7 +7,7 @@ import com.google.common.collect.Lists;
 
 public class Day18 {
 
-    private static final String input = ".^.^..^......^^^^^...^^^...^...^....^^.^...^.^^^^....^...^^.^^^...^^^^.^^.^.^^..^.^^^..^^^^^^.^^^..^";
+    private static final String input = "^..^^.^^^..^^.^...^^^^^....^.^..^^^.^.^.^^...^.^.^.^.^^.....^.^^.^.^.^.^.^.^^..^^^^^...^.....^....^.";
     private static final char SAFE = '.';
     private static final char TRAP = '^';
 

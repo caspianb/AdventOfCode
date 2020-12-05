@@ -14,7 +14,7 @@ import com.google.common.collect.Sets;
 
 public class Day14 {
 
-    private static String input = "cuanljph";
+    private static String input = "yjdafjpo";
     private static int HASH_TIMES = 2016;
 
     public static void main(String[] args) throws IOException {

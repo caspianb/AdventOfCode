@@ -1,8 +1,7 @@
 package aoc2016;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import util.ResourceReader;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +12,6 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -32,10 +30,7 @@ public class Day11 {
     private static final Map<String, String> ABBR = Maps.newHashMap();
 
     public static void main(String[] args) throws Exception {
-        Path path = Paths.get("src/main/resources/aoc2016/input11.txt");
-        List<String> input = Files.readAllLines(path).stream()
-                .map(StringUtils::stripToEmpty)
-                .collect(Collectors.toList());
+        List<String> input = ResourceReader.readLines("aoc2016/input11.txt");
 
         System.out.println("Running Day11");
         problem1(input);
