@@ -16,6 +16,9 @@ dependencies {
     implementation 'commons-codec:commons-codec:+'
     implementation 'commons-io:commons-io:+'
 
+    compileOnly 'org.projectlombok:lombok:+'
+    annotationProcessor 'org.projectlombok:lombok:+'
+
     testImplementation 'org.mockito:mockito-all:+'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:+'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:+'
